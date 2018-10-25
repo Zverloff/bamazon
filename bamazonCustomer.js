@@ -50,14 +50,18 @@ var mainMenu = function() {
             
             if (quantity < res[0].quantity) {
                 console.log("You have ordered " + quantity + " " + res[0].product_name)
-                connection.query("UPDATE products SET ? WHERE ?", [{
-                    quantity: res[0].quantity - quantity
-                }], function(err,res) {} )
-                start()
+                connection.query("UPDATE products SET quantity = ? WHERE item_id = ?", [
+                    res[0].quantity - quantity,
+                    res[0].item_id
+                ], function(err,res) {
+                    start()
+                } )
+                
             }
-            else
+            else {
             console.log("I'm sorry, we don't have that many. Please select again.")
             start()
+            }
         })
             
     })
